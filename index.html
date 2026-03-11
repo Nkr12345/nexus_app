@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#07090f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NEXUS">
+<meta name="description" content="Your AI Learning & Development Team">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com https://api.x.ai https:; img-src 'self' data:; frame-ancestors 'none'; form-action 'none'; base-uri 'self';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Referrer-Policy" content="no-referrer">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+<link rel="manifest" href="manifest.json">
+<title>NEXUS — AI Team</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07090f;--surface:#0d1018;--card:#111520;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--text:#eef0f8;--muted:#4a5568;--soft:#7a8599;--green:#00e5a0;--amber:#f59e0b;--purple:#818cf8;--red:#f87171;--blue:#38bdf8;--nav-h:64px;--safe-bottom:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 15% 20%,rgba(0,229,160,0.04) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 85% 80%,rgba(129,140,248,0.04) 0%,transparent 60%);pointer-events:none;z-index:0}
+
+/* LOCK SCREEN */
+.lock-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center}
+.lock-screen.hidden{display:none}
+.lock-logo{font-size:36px;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,var(--green),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.lock-sub{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:36px}
+.lock-icon{font-size:52px;margin-bottom:16px}
+.lock-title{font-size:20px;font-weight:700;margin-bottom:8px}
+.lock-desc{font-size:12px;color:var(--soft);font-family:'JetBrains Mono',monospace;line-height:1.7;margin-bottom:28px;max-width:280px}
+.pin-dots{display:flex;gap:14px;justify-content:center;margin-bottom:28px}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border2);transition:all 0.2s}
+.pin-dot.filled{background:var(--green);border-color:var(--green);box-shadow:0 0 10px rgba(0,229,160,0.4)}
+.pin-dot.error{background:var(--red);border-color:var(--red)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:260px}
+.pin-btn{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;font-size:22px;font-weight:700;color:var(--text);cursor:pointer;transition:all 0.15s;user-select:none}
+.pin-btn:active{background:rgba(0,229,160,0.1);border-color:var(--green);transform:scale(0.94)}
+.pin-error{color:var(--red);font-size:11px;font-family:'JetBrains Mono',monospace;margin-top:-20px;margin-bottom:16px;min-height:14px}
+.setup-label{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);letter-spacing:1px;margin-bottom:10px}
+.lockout-box{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:10px;padding:10px 14px;font-size:11px;color:var(--red);font-family:'JetBrains Mono',monospace;margin-top:10px;display:none}
+.lock-hint{margin-top:16px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted)}
+.lock-back{position:absolute;top:20px;left:20px;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;color:var(--soft);transition:all 0.2s}
+.lock-back:active{background:rgba(255,255,255,0.12);transform:scale(0.95)}
+.team-unified{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:16px;margin-bottom:12px}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.team-cell{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:12px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden}
+.team-cell:active{transform:scale(0.97);border-color:var(--border2)}
+.team-cell-accent{position:absolute;top:0;left:0;right:0;height:2px;border-radius:14px 14px 0 0}
+.team-cell-icon{font-size:22px;flex-shrink:0}
+.team-cell-info{min-width:0;flex:1}
+.team-cell-name{font-size:13px;font-weight:700;margin-bottom:1px}
+.team-cell-role{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:0.5px}
+.team-cell-dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;animation:blink 2s ease infinite}
+.team-center{display:flex;align-items:center;justify-content:center;padding:8px 0;gap:6px}
+.team-center-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,160,0.25),transparent)}
+.team-center-hub{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,rgba(0,229,160,0.15),rgba(129,140,248,0.15));border:1px solid rgba(0,229,160,0.25);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.team-all-btn{width:100%;margin-top:10px;padding:10px;border-radius:12px;background:linear-gradient(135deg,rgba(0,229,160,0.08),rgba(129,140,248,0.08));border:1px solid rgba(0,229,160,0.2);color:var(--green);font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:center;transition:all 0.2s}
+.team-all-btn:active{transform:scale(0.98)}
+
+/* HEADER */
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(7,9,15,0.95);backdrop-filter:blur(20px);position:relative;z-index:10;flex-shrink:0}
+.header-logo{font-size:20px;font-weight:900;letter-spacing:-0.5px;background:linear-gradient(135deg,var(--green),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-right{display:flex;gap:8px;align-items:center}
+.icon-btn{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--soft);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s}
+.icon-btn:active{background:rgba(255,255,255,0.1);transform:scale(0.95)}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--green);cursor:pointer;padding:8px 12px;border-radius:10px;background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.2);font-family:'Outfit',sans-serif;transition:all 0.2s}
+.back-btn:active{background:rgba(0,229,160,0.15);transform:scale(0.96)}
+.online-badge{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--green);background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.2);padding:4px 10px;border-radius:20px}
+.online-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* LAYOUT */
+.main{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;z-index:1;-webkit-overflow-scrolling:touch}
+.main::-webkit-scrollbar{display:none}
+.page{display:none;padding:16px;min-height:100%}
+.page.active{display:block;animation:slideUp 0.25s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.bottom-nav{display:flex;border-top:1px solid var(--border);background:rgba(7,9,15,0.97);backdrop-filter:blur(20px);padding-bottom:var(--safe-bottom);flex-shrink:0;position:relative;z-index:10}
+.nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 4px;cursor:pointer;transition:all 0.2s;color:var(--muted);font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:0.5px;border:none;background:none}
+.nav-tab .nav-icon{font-size:20px;transition:transform 0.2s}
+.nav-tab.active{color:var(--green)}
+.nav-tab.active .nav-icon{transform:scale(1.1)}
+
+/* UI ELEMENTS */
+.page-title{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
+.page-sub{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:20px}
+.section-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'JetBrains Mono',monospace;margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px}
+.sec-badge{display:flex;align-items:center;gap:10px;background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.15);border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.sec-badge-text{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--green);line-height:1.6}
+
+/* HOME */
+.welcome-card{background:linear-gradient(135deg,rgba(0,229,160,0.08),rgba(129,140,248,0.08));border:1px solid rgba(0,229,160,0.15);border-radius:20px;padding:20px;margin-bottom:16px}
+.welcome-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.xp-badge{background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.2);color:var(--green);font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 10px;border-radius:20px}
+.xp-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.xp-bar{height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden}
+.xp-fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--purple));border-radius:3px;animation:growBar 1.5s ease 0.5s forwards}
+@keyframes growBar{to{width:34%}}
+.streak-row{display:flex;gap:10px;margin-bottom:16px}
+.streak-card{flex:1;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px}
+.streak-icon{font-size:22px}
+.streak-val{font-size:20px;font-weight:900;line-height:1}
+.streak-lbl{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.team-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin-bottom:4px}
+.team-scroll::-webkit-scrollbar{display:none}
+.team-mini{flex-shrink:0;width:96px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;cursor:pointer;transition:all 0.2s;text-align:center}
+.team-mini:active{transform:scale(0.96)}
+.t-avatar{font-size:24px;margin-bottom:6px;position:relative;display:inline-block}
+.t-dot{position:absolute;bottom:0;right:-2px;width:8px;height:8px;border-radius:50%;border:2px solid var(--card);animation:blink 2s ease infinite}
+.t-name{font-size:11px;font-weight:700;margin-bottom:2px}
+.t-role{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--muted)}
+
+/* TEAM */
+.ai-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;transition:all 0.2s;position:relative;overflow:hidden}
+.ai-card:active{transform:scale(0.99)}
+.ai-card-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.ai-icon-wrap{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;position:relative}
+.ai-online{position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;border:2px solid var(--card);animation:blink 2s ease infinite}
+.ai-info{flex:1;min-width:0}
+.ai-name{font-size:16px;font-weight:700;margin-bottom:2px}
+.ai-role{font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:6px}
+.ai-desc{font-size:12px;color:var(--soft);line-height:1.6}
+.ai-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.ai-tag{font-size:10px;padding:3px 9px;border-radius:20px;border:1px solid var(--border);color:var(--muted);font-family:'JetBrains Mono',monospace}
+.ai-actions{display:flex;gap:8px}
+.btn-chat{flex:1;padding:10px;border-radius:10px;border:none;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s}
+.btn-remove{width:40px;height:40px;border-radius:10px;border:none;background:rgba(248,113,113,0.08);color:var(--red);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.btn-remove:active{background:rgba(248,113,113,0.2)}
+.add-ai-card{background:rgba(0,229,160,0.04);border:1px dashed rgba(0,229,160,0.25);border-radius:16px;padding:20px;display:flex;align-items:center;gap:14px;cursor:pointer;margin-bottom:12px}
+.add-ai-card:active{background:rgba(0,229,160,0.08)}
+.add-icon{width:48px;height:48px;border-radius:13px;background:rgba(0,229,160,0.1);border:1px dashed rgba(0,229,160,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.add-title{font-size:15px;font-weight:700;color:var(--green);margin-bottom:2px}
+.add-sub{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+/* CHAT */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - var(--nav-h) - 56px - 8px)}
+.agent-selector{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;flex-shrink:0}
+.agent-selector::-webkit-scrollbar{display:none}
+.agent-chip{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:24px;border:1px solid var(--border);background:var(--card);cursor:pointer;white-space:nowrap;flex-shrink:0}
+.agent-chip.active{border-color:var(--green);background:rgba(0,229,160,0.08)}
+.chip-icon{font-size:16px}
+.chip-name{font-size:12px;font-weight:600}
+.agent-chip.active .chip-name{color:var(--green)}
+.messages{flex:1;overflow-y:auto;padding:4px 0 8px;display:flex;flex-direction:column;gap:12px}
+.messages::-webkit-scrollbar{display:none}
+.msg{display:flex;gap:10px;max-width:90%}
+.msg.user{flex-direction:row-reverse;margin-left:auto}
+.msg-av{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.msg.ai .msg-av{background:rgba(0,229,160,0.1)}
+.msg.user .msg-av{background:rgba(129,140,248,0.12);font-weight:700;font-size:12px;color:var(--purple)}
+.msg-body{display:flex;flex-direction:column;gap:4px}
+.msg-name{font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:600}
+.msg.ai .msg-name{color:var(--green)}
+.msg.user .msg-name{color:var(--purple);text-align:right}
+.msg-bubble{padding:11px 14px;border-radius:14px;font-size:13px;line-height:1.65}
+.msg.ai .msg-bubble{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:4px 14px 14px 14px}
+.msg.user .msg-bubble{background:rgba(0,229,160,0.09);border:1px solid rgba(0,229,160,0.18);border-radius:14px 4px 14px 14px}
+.msg-code{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);margin-top:8px;overflow-x:auto;white-space:pre}
+.typing{display:flex;gap:4px;align-items:center;padding:4px 2px}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--green);display:block;animation:bounce 1.4s ease infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.chat-input-wrap{flex-shrink:0;padding-top:10px;border-top:1px solid var(--border)}
+.quick-btns{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}
+.quick-btns::-webkit-scrollbar{display:none}
+.qbtn{font-size:11px;padding:5px 12px;border-radius:20px;white-space:nowrap;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--soft);cursor:pointer;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.qbtn:active{background:rgba(0,229,160,0.08);color:var(--green);border-color:rgba(0,229,160,0.2)}
+.input-row{display:flex;gap:10px;align-items:flex-end}
+.chat-input{flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:14px;padding:12px 16px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;outline:none;resize:none;max-height:100px;line-height:1.5}
+.chat-input:focus{border-color:rgba(0,229,160,0.3)}
+.chat-input::placeholder{color:var(--muted)}
+.send-btn{width:46px;height:46px;border-radius:13px;background:var(--green);border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.send-btn:active{transform:scale(0.93)}
+
+/* LEARN */
+.path-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px}
+.path-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.path-icon{font-size:28px}
+.path-badge{font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:600;padding:3px 10px;border-radius:20px}
+.badge-begin{background:rgba(0,229,160,0.1);color:var(--green);border:1px solid rgba(0,229,160,0.2)}
+.badge-inter{background:rgba(245,158,11,0.1);color:var(--amber);border:1px solid rgba(245,158,11,0.2)}
+.badge-adv{background:rgba(129,140,248,0.1);color:var(--purple);border:1px solid rgba(129,140,248,0.2)}
+.path-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.path-desc{font-size:12px;color:var(--soft);line-height:1.6;margin-bottom:12px}
+.prog-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.prog-bar{height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px}
+.path-meta{display:flex;gap:12px;font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+/* GOALS */
+.goal-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.goal-chk{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer}
+.goal-chk.done{background:var(--green);border-color:var(--green);color:#000}
+.goal-txt{flex:1;min-width:0}
+.goal-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.goal-meta{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.goal-tag{font-size:10px;padding:3px 9px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-weight:600;white-space:nowrap;flex-shrink:0}
+.add-goal-btn{width:100%;padding:14px;border-radius:14px;background:rgba(0,229,160,0.05);border:1px dashed rgba(0,229,160,0.2);color:var(--green);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px}
+
+/* SETTINGS */
+.settings-group{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.settings-row{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border);gap:12px;cursor:pointer}
+.settings-row:last-child{border-bottom:none}
+.settings-row:active{background:rgba(255,255,255,0.03)}
+.settings-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.settings-info{flex:1}
+.settings-label{font-size:14px;font-weight:600}
+.settings-sub{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:1px}
+.api-input-wrap{padding:0 16px 14px}
+.api-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;outline:none}
+.api-input:focus{border-color:rgba(0,229,160,0.3)}
+.api-save-btn{margin-top:8px;width:100%;padding:10px;border-radius:10px;background:var(--green);border:none;color:#000;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+.api-status{display:flex;align-items:center;gap:6px;font-size:11px;font-family:'JetBrains Mono',monospace;padding:6px 12px;border-radius:20px;margin-top:8px}
+.api-status.ok{background:rgba(0,229,160,0.08);color:var(--green);border:1px solid rgba(0,229,160,0.2)}
+.api-status.miss{background:rgba(248,113,113,0.08);color:var(--red);border:1px solid rgba(248,113,113,0.2)}
+
+/* DRAWER */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.drawer-overlay.show{display:flex;animation:fadeO .2s ease}
+@keyframes fadeO{from{opacity:0}to{opacity:1}}
+.drawer{width:100%;max-width:480px;background:var(--surface);border:1px solid var(--border);border-radius:24px 24px 0 0;padding:0 0 calc(20px + var(--safe-bottom));animation:slideD .25s ease;max-height:90vh;overflow-y:auto}
+.drawer::-webkit-scrollbar{display:none}
+@keyframes slideD{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.drawer-handle{width:40px;height:4px;border-radius:2px;background:rgba(255,255,255,0.1);margin:12px auto 0}
+.drawer-content{padding:20px 20px 10px}
+.drawer-title{font-size:20px;font-weight:800;margin-bottom:4px}
+.drawer-sub{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-bottom:16px}
+.form-group{margin-bottom:14px}
+.form-label{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-bottom:6px;letter-spacing:1px;display:block}
+.form-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;outline:none}
+.form-input:focus{border-color:rgba(0,229,160,0.3)}
+.color-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.color-swatch{width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent}
+.color-swatch.selected{border-color:white;transform:scale(1.15)}
+.emoji-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.emoji-opt{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer}
+.emoji-opt.selected{border-color:var(--green);background:rgba(0,229,160,0.1)}
+.form-btn{width:100%;padding:14px;border-radius:12px;background:var(--green);border:none;color:#000;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+
+/* MISC */
+.offline-banner{background:rgba(248,113,113,0.1);border-bottom:1px solid rgba(248,113,113,0.2);padding:8px 16px;text-align:center;font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--red);display:none;flex-shrink:0}
+.offline-banner.show{display:block}
+.install-bar{background:rgba(0,229,160,0.06);border-bottom:1px solid rgba(0,229,160,0.15);padding:10px 16px;display:none;align-items:center;gap:10px;flex-shrink:0}
+.install-bar.show{display:flex}
+.install-text{flex:1;font-size:12px;color:var(--soft)}
+.install-btn{background:var(--green);color:#000;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif}
+.dismiss-btn{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px}
+.toast{position:fixed;bottom:calc(var(--nav-h) + 16px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:#1a1f2e;border:1px solid var(--border2);border-radius:12px;padding:10px 20px;font-size:13px;font-weight:600;z-index:300;opacity:0;transition:all .3s;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOCK SCREEN ═══ -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-back" id="lockBackBtn" onclick="lockBack()" style="display:none">◀</div>
+  <div class="lock-logo">NEXUS</div>
+  <div class="lock-sub">AI Learning Team</div>
+
+  <!-- SETUP -->
+  <div id="setupView" style="display:none;width:100%;max-width:300px">
+    <div class="lock-icon">🔐</div>
+    <div class="lock-title">Create Your PIN</div>
+    <div class="lock-desc">Set a 6-digit PIN. Your API keys are encrypted with this PIN.</div>
+    <div class="setup-label" id="setupLabel">Enter new PIN</div>
+    <div class="pin-dots" id="setupDots">
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+    </div>
+    <div class="pin-error" id="setupError"></div>
+    <div class="pin-pad">
+      <div class="pin-btn" onclick="S('1')">1</div><div class="pin-btn" onclick="S('2')">2</div><div class="pin-btn" onclick="S('3')">3</div>
+      <div class="pin-btn" onclick="S('4')">4</div><div class="pin-btn" onclick="S('5')">5</div><div class="pin-btn" onclick="S('6')">6</div>
+      <div class="pin-btn" onclick="S('7')">7</div><div class="pin-btn" onclick="S('8')">8</div><div class="pin-btn" onclick="S('9')">9</div>
+      <div class="pin-btn" onclick="S('c')" style="font-size:13px;color:var(--muted)">CLR</div>
+      <div class="pin-btn" onclick="S('0')">0</div>
+      <div class="pin-btn" onclick="S('d')" style="font-size:18px">⌫</div>
+    </div>
+  </div>
+
+  <!-- UNLOCK -->
+  <div id="unlockView" style="display:none;width:100%;max-width:300px">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">Welcome Back</div>
+    <div class="lock-desc">Enter your PIN to access NEXUS</div>
+    <div class="pin-dots" id="unlockDots">
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+    </div>
+    <div class="pin-error" id="unlockError"></div>
+    <div class="pin-pad">
+      <div class="pin-btn" onclick="U('1')">1</div><div class="pin-btn" onclick="U('2')">2</div><div class="pin-btn" onclick="U('3')">3</div>
+      <div class="pin-btn" onclick="U('4')">4</div><div class="pin-btn" onclick="U('5')">5</div><div class="pin-btn" onclick="U('6')">6</div>
+      <div class="pin-btn" onclick="U('7')">7</div><div class="pin-btn" onclick="U('8')">8</div><div class="pin-btn" onclick="U('9')">9</div>
+      <div class="pin-btn" onclick="U('c')" style="font-size:13px;color:var(--muted)">CLR</div>
+      <div class="pin-btn" onclick="U('0')">0</div>
+      <div class="pin-btn" onclick="U('d')" style="font-size:18px">⌫</div>
+    </div>
+    <div class="lockout-box" id="lockoutBox"></div>
+    <div class="lock-hint">Forgot PIN? <span style="color:var(--green);cursor:pointer" onclick="hardReset()">Reset app</span></div>
+  </div>
+</div>
+
+<div class="offline-banner" id="offlineBanner">⚠ Offline — AI chat unavailable</div>
+<div class="install-bar" id="installBar">
+  <span class="install-text"><strong>Install NEXUS</strong> on your home screen</span>
+  <button class="install-btn" id="installBtn">Install</button>
+  <button class="dismiss-btn" onclick="document.getElementById('installBar').classList.remove('show')">✕</button>
+</div>
+
+<header class="header">
+  <div id="headerLeft">
+    <div class="header-logo">NEXUS</div>
+  </div>
+  <div class="header-right">
+    <div class="online-badge" id="onlineBadge"><div class="dot"></div>ONLINE</div>
+    <div class="icon-btn" id="settingsBtn" onclick="showPage('settings')">⚙️</div>
+    <div class="icon-btn" onclick="lockApp()" title="Lock app">🔒</div>
+  </div>
+</header>
+
+<div class="main" id="mainArea">
+
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="welcome-card">
+      <div class="welcome-top">
+        <div><div style="font-size:13px;color:var(--soft);margin-bottom:4px">Good day,</div><div style="font-size:20px;font-weight:800">Future AI Builder 🚀</div></div>
+        <div class="xp-badge">Lvl 1</div>
+      </div>
+      <div class="xp-row"><span>XP Progress</span><span>340 / 1000</span></div>
+      <div class="xp-bar"><div class="xp-fill"></div></div>
+    </div>
+    <div class="sec-badge"><span style="font-size:18px">🛡️</span><div class="sec-badge-text">PIN locked · Keys encrypted · CSP secured<br>Direct to AI providers · No data leaks</div></div>
+    <div class="streak-row">
+      <div class="streak-card"><div class="streak-icon">🔥</div><div><div class="streak-val" style="color:var(--red)">3</div><div class="streak-lbl">Day streak</div></div></div>
+      <div class="streak-card"><div class="streak-icon">✅</div><div><div class="streak-val" style="color:var(--green)">2</div><div class="streak-lbl">Lessons done</div></div></div>
+      <div class="streak-card"><div class="streak-icon">💬</div><div><div class="streak-val" style="color:var(--purple)">34</div><div class="streak-lbl">AI chats</div></div></div>
+    </div>
+    <div class="section-label">Your AI Team</div>
+    <div class="team-unified" id="homeTeamUnified">
+      <div class="team-grid" id="homeTeamGrid"></div>
+      <div class="team-center">
+        <div class="team-center-line"></div>
+        <div class="team-center-hub">🔗</div>
+        <div class="team-center-line"></div>
+      </div>
+      <button class="team-all-btn" onclick="chatWith('all')">🌐 Ask All AIs Together</button>
+    </div>
+    <div class="section-label">Active Path</div>
+    <div class="path-card" onclick="showPage('learn')">
+      <div class="path-top"><div class="path-icon">🐍</div><div class="path-badge badge-begin">Active</div></div>
+      <div class="path-title">Python for AI Builders</div>
+      <div class="path-desc">Your first step — Claude guides every lesson.</div>
+      <div class="prog-row"><span>2 / 12 lessons</span><span>16%</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:16%;background:var(--green)"></div></div>
+    </div>
+    <div class="section-label">Mission</div>
+    <div class="card" style="background:rgba(129,140,248,0.05);border-color:rgba(129,140,248,0.15)">
+      <div style="font-size:13px;line-height:1.7;color:var(--soft);font-style:italic">"Build a platform where all AI works together for a peaceful world."</div>
+      <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-top:8px">— YOUR NEXUS MISSION</div>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="page" id="page-team">
+    <div class="page-title">AI Team 🤖</div>
+    <div class="page-sub">Tap to chat · 🗑 to remove custom AIs</div>
+    <div id="teamList"></div>
+    <div class="add-ai-card" onclick="openAddAI()">
+      <div class="add-icon">➕</div>
+      <div><div class="add-title">Add New AI</div><div class="add-sub">Connect any AI with an API key</div></div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="page" id="page-chat">
+    <div class="chat-wrap">
+      <div class="agent-selector" id="agentSelector"></div>
+      <div class="messages" id="messages"></div>
+      <div class="chat-input-wrap">
+        <div class="quick-btns">
+          <div class="qbtn" onclick="quickSend('Explain this to me simply')">💡 Explain</div>
+          <div class="qbtn" onclick="quickSend('Teach me Python basics today')">🐍 Python</div>
+          <div class="qbtn" onclick="quickSend('Quiz me on what I learned')">🎯 Quiz me</div>
+          <div class="qbtn" onclick="quickSend('What should I learn next?')">📚 What next?</div>
+          <div class="qbtn" onclick="quickSend('How do I build NEXUS step by step?')">🚀 Build NEXUS</div>
+        </div>
+        <div class="input-row">
+          <textarea class="chat-input" id="chatInput" placeholder="Ask your team..." rows="1"
+            onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" onclick="sendMsg()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEARN -->
+  <div class="page" id="page-learn">
+    <div class="page-title">Learning Paths 📚</div>
+    <div class="page-sub">Your complete journey to AI builder</div>
+    <div class="section-label">Beginner</div>
+    <div class="path-card"><div class="path-top"><div class="path-icon">🐍</div><div class="path-badge badge-begin">Active</div></div><div class="path-title">Python for AI Builders</div><div class="path-desc">Variables, functions, loops. Build your first program with Claude.</div><div class="prog-row"><span>2/12 lessons</span><span>16%</span></div><div class="prog-bar"><div class="prog-fill" style="width:16%;background:var(--green)"></div></div><div class="path-meta" style="margin-top:8px"><span>⏱ ~40 hrs</span><span>🧠 Claude</span></div></div>
+    <div class="path-card"><div class="path-top"><div class="path-icon">📊</div><div class="path-badge badge-begin">Beginner</div></div><div class="path-title">Math for AI (No Fear)</div><div class="path-desc">Linear algebra, stats, calculus — made simple by Gemini.</div><div class="prog-row"><span>0/8 lessons</span><span>0%</span></div><div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--purple)"></div></div><div class="path-meta" style="margin-top:8px"><span>⏱ ~30 hrs</span><span>💎 Gemini</span></div></div>
+    <div class="section-label">Intermediate</div>
+    <div class="path-card"><div class="path-top"><div class="path-icon">🧠</div><div class="path-badge badge-inter">Intermediate</div></div><div class="path-title">Machine Learning Fundamentals</div><div class="path-desc">Neural networks, training, gradient descent. Build your first ML model.</div><div class="prog-row"><span>0/10 lessons</span><span>0%</span></div><div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--amber)"></div></div><div class="path-meta" style="margin-top:8px"><span>⏱ ~60 hrs</span><span>💎 Gemini</span></div></div>
+    <div class="path-card"><div class="path-top"><div class="path-icon">🔤</div><div class="path-badge badge-inter">Intermediate</div></div><div class="path-title">NLP & Language Models</div><div class="path-desc">Transformers, attention, tokenization. How Claude & GPT work inside.</div><div class="prog-row"><span>0/8 lessons</span><span>0%</span></div><div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--amber)"></div></div><div class="path-meta" style="margin-top:8px"><span>⏱ ~50 hrs</span><span>⚡ ChatGPT</span></div></div>
+    <div class="section-label">Advanced</div>
+    <div class="path-card"><div class="path-top"><div class="path-icon">🏗️</div><div class="path-badge badge-adv">Advanced</div></div><div class="path-title">Building AI Products</div><div class="path-desc">APIs, deployment, UX. Turn models into real products — build NEXUS here.</div><div class="prog-row"><span>0/12 lessons</span><span>0%</span></div><div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--purple)"></div></div><div class="path-meta" style="margin-top:8px"><span>⏱ ~80 hrs</span><span>🤖 Full Team</span></div></div>
+    <div class="path-card"><div class="path-top"><div class="path-icon">🕊️</div><div class="path-badge badge-adv">Advanced</div></div><div class="path-title">AI Safety & Ethics</div><div class="path-desc">Build responsibly. Bias, fairness, alignment. The values that make NEXUS different.</div><div class="prog-row"><span>0/6 lessons</span><span>0%</span></div><div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--green)"></div></div><div class="path-meta" style="margin-top:8px"><span>⏱ ~25 hrs</span><span>🧠 Claude</span></div></div>
+  </div>
+
+  <!-- GOALS -->
+  <div class="page" id="page-goals">
+    <div class="page-title">Goals 🎯</div>
+    <div class="page-sub">Your milestones from here to NEXUS</div>
+    <div id="goalsList"></div>
+    <button class="add-goal-btn" onclick="addGoal()">＋ Add New Goal</button>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="page" id="page-settings">
+    <div class="page-title">Settings ⚙️</div>
+    <div class="page-sub">Security & configuration</div>
+    <div class="sec-badge"><span style="font-size:18px">🛡️</span><div class="sec-badge-text"><strong style="color:var(--text)">Security active</strong><br>PIN lock · XOR-encrypted keys · CSP headers · No tracking · Auto-lock on background</div></div>
+    <div class="section-label">Security</div>
+    <div class="settings-group">
+      <div class="settings-row" onclick="changePIN()"><div class="settings-icon">🔑</div><div class="settings-info"><div class="settings-label">Change PIN</div><div class="settings-sub">Update your 6-digit lock PIN</div></div><div style="color:var(--muted)">▶</div></div>
+      <div class="settings-row" onclick="lockApp()"><div class="settings-icon">🔒</div><div class="settings-info"><div class="settings-label">Lock Now</div><div class="settings-sub">Immediately lock the app</div></div><div style="color:var(--muted)">▶</div></div>
+    </div>
+    <div class="section-label">AI API Keys</div>
+    <div class="settings-group">
+      <div class="settings-row" onclick="toggleAPI('c-api')"><div class="settings-icon">🧠</div><div class="settings-info"><div class="settings-label">Claude</div><div class="settings-sub">console.anthropic.com</div></div><div style="color:var(--muted)" id="c-api-arr">▼</div></div>
+      <div id="c-api" style="display:none" class="api-input-wrap"><input class="api-input" type="password" id="key-claude" placeholder="sk-ant-api03-..." autocomplete="off" spellcheck="false"><div id="st-claude"></div><button class="api-save-btn" onclick="saveKey('claude')">Save Key</button></div>
+      <div class="settings-row" onclick="toggleAPI('g-api')"><div class="settings-icon">⚡</div><div class="settings-info"><div class="settings-label">ChatGPT</div><div class="settings-sub">platform.openai.com</div></div><div style="color:var(--muted)" id="g-api-arr">▼</div></div>
+      <div id="g-api" style="display:none" class="api-input-wrap"><input class="api-input" type="password" id="key-gpt" placeholder="sk-..." autocomplete="off" spellcheck="false"><div id="st-gpt"></div><button class="api-save-btn" onclick="saveKey('gpt')">Save Key</button></div>
+      <div class="settings-row" onclick="toggleAPI('ge-api')"><div class="settings-icon">💎</div><div class="settings-info"><div class="settings-label">Gemini</div><div class="settings-sub">aistudio.google.com</div></div><div style="color:var(--muted)" id="ge-api-arr">▼</div></div>
+      <div id="ge-api" style="display:none" class="api-input-wrap"><input class="api-input" type="password" id="key-gemini" placeholder="AIza..." autocomplete="off" spellcheck="false"><div id="st-gemini"></div><button class="api-save-btn" onclick="saveKey('gemini')">Save Key</button></div>
+      <div class="settings-row" onclick="toggleAPI('gr-api')"><div class="settings-icon">🔥</div><div class="settings-info"><div class="settings-label">Grok</div><div class="settings-sub">console.x.ai</div></div><div style="color:var(--muted)" id="gr-api-arr">▼</div></div>
+      <div id="gr-api" style="display:none" class="api-input-wrap"><input class="api-input" type="password" id="key-grok" placeholder="xai-..." autocomplete="off" spellcheck="false"><div id="st-grok"></div><button class="api-save-btn" onclick="saveKey('grok')">Save Key</button></div>
+    </div>
+    <div class="section-label">Data</div>
+    <div class="settings-group">
+      <div class="settings-row" onclick="hardReset()"><div class="settings-icon">🗑️</div><div class="settings-info"><div class="settings-label">Reset All Data</div><div class="settings-sub">Wipe keys, goals, PIN — full reset</div></div><div style="color:var(--muted)">▶</div></div>
+    </div>
+    <div class="section-label">Get API Keys (free)</div>
+    <div class="card" style="background:rgba(0,229,160,0.04);border-color:rgba(0,229,160,0.1)">
+      <div style="font-size:12px;line-height:2.2;color:var(--soft);font-family:'JetBrains Mono',monospace">
+        1. Claude → console.anthropic.com<br>2. ChatGPT → platform.openai.com<br>3. Gemini → aistudio.google.com<br>4. Grok → console.x.ai<br><span style="color:var(--green)">Sign up free → API Keys → Copy → Paste above</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<nav class="bottom-nav">
+  <button class="nav-tab active" onclick="showPage('home')" id="tab-home"><span class="nav-icon">🏠</span><span>Home</span></button>
+  <button class="nav-tab" onclick="showPage('team')" id="tab-team"><span class="nav-icon">🤖</span><span>Team</span></button>
+  <button class="nav-tab" onclick="showPage('chat')" id="tab-chat"><span class="nav-icon">💬</span><span>Chat</span></button>
+  <button class="nav-tab" onclick="showPage('learn')" id="tab-learn"><span class="nav-icon">📚</span><span>Learn</span></button>
+  <button class="nav-tab" onclick="showPage('goals')" id="tab-goals"><span class="nav-icon">🎯</span><span>Goals</span></button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<!-- ADD AI DRAWER -->
+<div class="drawer-overlay" id="addDrawer" onclick="if(event.target===this)this.classList.remove('show')">
+  <div class="drawer">
+    <div class="drawer-handle"></div>
+    <div class="drawer-content">
+      <div class="drawer-title">Add AI to Team ➕</div>
+      <div class="drawer-sub">Connect any AI with its API</div>
+      <div class="form-group"><label class="form-label">AI NAME</label><input class="form-input" id="n-name" placeholder="e.g. Mistral, Perplexity..."></div>
+      <div class="form-group"><label class="form-label">ROLE</label><input class="form-input" id="n-role" placeholder="e.g. Open Source Specialist"></div>
+      <div class="form-group"><label class="form-label">DESCRIPTION</label><input class="form-input" id="n-desc" placeholder="What is this AI good at?"></div>
+      <div class="form-group"><label class="form-label">API ENDPOINT (HTTPS only)</label><input class="form-input" id="n-url" placeholder="https://api.example.com/v1/messages"></div>
+      <div class="form-group"><label class="form-label">API KEY</label><input class="form-input" id="n-key" type="password" placeholder="Your API key" autocomplete="off"></div>
+      <div class="form-group">
+        <label class="form-label">ICON</label>
+        <div class="emoji-row">
+          <div class="emoji-opt selected" onclick="selEmoji(this,'🦙')">🦙</div><div class="emoji-opt" onclick="selEmoji(this,'🌊')">🌊</div>
+          <div class="emoji-opt" onclick="selEmoji(this,'🔍')">🔍</div><div class="emoji-opt" onclick="selEmoji(this,'🛠')">🛠</div>
+          <div class="emoji-opt" onclick="selEmoji(this,'⭐')">⭐</div><div class="emoji-opt" onclick="selEmoji(this,'🚀')">🚀</div>
+          <div class="emoji-opt" onclick="selEmoji(this,'🌐')">🌐</div><div class="emoji-opt" onclick="selEmoji(this,'💡')">💡</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">COLOR</label>
+        <div class="color-row">
+          <div class="color-swatch selected" style="background:#00e5a0" onclick="selColor(this,'#00e5a0')"></div>
+          <div class="color-swatch" style="background:#818cf8" onclick="selColor(this,'#818cf8')"></div>
+          <div class="color-swatch" style="background:#f59e0b" onclick="selColor(this,'#f59e0b')"></div>
+          <div class="color-swatch" style="background:#f87171" onclick="selColor(this,'#f87171')"></div>
+          <div class="color-swatch" style="background:#38bdf8" onclick="selColor(this,'#38bdf8')"></div>
+          <div class="color-swatch" style="background:#f472b6" onclick="selColor(this,'#f472b6')"></div>
+        </div>
+      </div>
+      <button class="form-btn" onclick="saveNewAI()">Add to Team ✓</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+// ════════════════════════════════════════
+//  SECURITY ENGINE
+// ════════════════════════════════════════
+const SEC = (() => {
+  const SALT = 'nx_2026_peace_salt';
+  const MAX_ATT = 5;
+  const LOCK_MS = 30000;
+
+  function hash(pin) {
+    const s = SALT + pin + SALT + pin.length;
+    let h = 5381;
+    for (let i = 0; i < s.length; i++) h = ((h << 5) + h) ^ s.charCodeAt(i);
+    return (h >>> 0).toString(16) + '_' + s.length;
+  }
+
+  function xor(data, key) {
+    const s = JSON.stringify(data), k = SALT + key;
+    let o = '';
+    for (let i = 0; i < s.length; i++) o += String.fromCharCode(s.charCodeAt(i) ^ k.charCodeAt(i % k.length));
+    return btoa(unescape(encodeURIComponent(o)));
+  }
+
+  function dxor(enc, key) {
+    try {
+      const k = SALT + key;
+      const s = decodeURIComponent(escape(atob(enc)));
+      let o = '';
+      for (let i = 0; i < s.length; i++) o += String.fromCharCode(s.charCodeAt(i) ^ k.charCodeAt(i % k.length));
+      return JSON.parse(o);
+    } catch { return null; }
+  }
+
+  function sanitize(v) {
+    if (typeof v !== 'string') return '';
+    return v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
+  }
+
+  function valKey(p, k) {
+    if (!k || k.length < 8 || k.length > 300) return false;
+    if (/[\s<>{}]/.test(k)) return false;
+    const pats = {claude:/^sk-ant-/,gpt:/^sk-/,gemini:/^AIza/,grok:/^xai-/};
+    return !pats[p] || pats[p].test(k);
+  }
+
+  const rt = {};
+  function rateLimit(id, max=20) {
+    const now = Date.now();
+    if (!rt[id]) rt[id] = [];
+    rt[id] = rt[id].filter(t => now - t < 60000);
+    if (rt[id].length >= max) return false;
+    rt[id].push(now);
+    return true;
+  }
+
+  return {
+    savePIN: (p) => { localStorage.setItem('nx_ph', hash(p)); localStorage.setItem('nx_ps', '1'); },
+    verifyPIN: (p) => localStorage.getItem('nx_ph') === hash(p),
+    hasPIN: () => localStorage.getItem('nx_ps') === '1',
+    resetPIN: () => { localStorage.removeItem('nx_ph'); localStorage.removeItem('nx_ps'); },
+    getAtt: () => parseInt(localStorage.getItem('nx_att')||'0'),
+    incAtt: () => {
+      const n = parseInt(localStorage.getItem('nx_att')||'0') + 1;
+      localStorage.setItem('nx_att', n);
+      if (n >= MAX_ATT) localStorage.setItem('nx_lo', Date.now().toString());
+      return n;
+    },
+    resetAtt: () => { localStorage.removeItem('nx_att'); localStorage.removeItem('nx_lo'); },
+    isLocked: () => { const lo = +localStorage.getItem('nx_lo'); return lo && (Date.now()-lo) < LOCK_MS; },
+    lockRemain: () => Math.max(0, Math.ceil((LOCK_MS-(Date.now()-+localStorage.getItem('nx_lo')))/1000)),
+    MAX_ATT, encrypt: xor, decrypt: dxor, sanitize, valKey, rateLimit
+  };
+})();
+
+// ════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════
+let PIN = ''; // in memory only, never stored plain
+let unlocked = false;
+let inited = false;
+let pinBuf = '', setupPhase = 'new', setupFirst = '';
+let aiTeam = [], apiKeys = {}, conversations = {}, goals = [];
+let selEmoji_ = '🦙', selColor_ = '#00e5a0';
+
+const DEFAULTS = [
+  {id:'claude',name:'Claude',role:'MENTOR & COACH',icon:'🧠',color:'#00e5a0',desc:'Primary guide for deep learning, coding, ethics and responsible AI.',tags:['Python','AI Theory','Writing','Ethics'],at:'claude',ep:'https://api.anthropic.com/v1/messages',rm:false},
+  {id:'gpt',name:'ChatGPT',role:'CREATIVE SOLVER',icon:'⚡',color:'#f59e0b',desc:'Rapid ideation, prototyping and exploring multiple angles fast.',tags:['Ideation','Prototyping','Images','Speed'],at:'gpt',ep:'https://api.openai.com/v1/chat/completions',rm:false},
+  {id:'gemini',name:'Gemini',role:'RESEARCH LEAD',icon:'💎',color:'#818cf8',desc:'Research, math, logic and real-time data from Google.',tags:['Research','Math','Logic','Real-time'],at:'gemini',ep:'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',rm:false},
+  {id:'grok',name:'Grok',role:'TRENDS ANALYST',icon:'🔥',color:'#f87171',desc:'Real-time AI and tech industry intelligence.',tags:['Trends','Industry','Real-time','Analysis'],at:'grok',ep:'https://api.x.ai/v1/chat/completions',rm:false},
+];
+
+let curAgent = 'claude';
+
+// ════════════════════════════════════════
+//  LOCK / PIN
+// ════════════════════════════════════════
+function initLock() {
+  if (SEC.hasPIN()) { show('unlockView'); checkLockTimer(); }
+  else show('setupView');
+}
+
+function show(id) {
+  document.getElementById('setupView').style.display='none';
+  document.getElementById('unlockView').style.display='none';
+  document.getElementById(id).style.display='block';
+  // Show back button only on unlock screen (when app was previously open)
+  const backBtn = document.getElementById('lockBackBtn');
+  if (backBtn) backBtn.style.display = (id==='unlockView' && inited) ? 'flex' : 'none';
+}
+
+function lockBack() {
+  // Go back to app without PIN only if session was previously unlocked
+  // This just hides the lock overlay - PIN was already verified this session
+  if (inited && unlocked) {
+    document.getElementById('lockScreen').classList.add('hidden');
+  }
+  // If not unlocked, do nothing - user must enter PIN
+}
+
+function checkLockTimer() {
+  const box = document.getElementById('lockoutBox');
+  const btns = document.querySelectorAll('#unlockView .pin-btn');
+  if (SEC.isLocked()) {
+    box.style.display='block';
+    box.textContent = `🔴 Too many attempts. Wait ${SEC.lockRemain()}s`;
+    btns.forEach(b=>b.style.opacity='0.3');
+    setTimeout(checkLockTimer, 1000);
+  } else {
+    box.style.display='none';
+    btns.forEach(b=>b.style.opacity='1');
+  }
+}
+
+function updateDots(id, n, type='') {
+  document.getElementById(id).querySelectorAll('.pin-dot').forEach((d,i) => {
+    d.classList.toggle('filled', !type && i<n);
+    d.classList.toggle('error', type==='error' && i<n);
+    if (!type && i>=n) { d.classList.remove('filled','error'); }
+  });
+}
+
+function flash(id) {
+  const dots = document.getElementById(id).querySelectorAll('.pin-dot');
+  dots.forEach(d=>{d.classList.add('error');d.classList.remove('filled')});
+  setTimeout(()=>dots.forEach(d=>{d.classList.remove('error');updateDots(id,0);}),600);
+}
+
+// Setup PIN
+function S(v) {
+  if (v==='d') pinBuf=pinBuf.slice(0,-1);
+  else if (v==='c') pinBuf='';
+  else if (pinBuf.length<6) pinBuf+=v;
+  updateDots('setupDots', pinBuf.length);
+  if (pinBuf.length===6) {
+    const entered=pinBuf; pinBuf='';
+    if (setupPhase==='new') {
+      setupFirst=entered; setupPhase='confirm';
+      document.getElementById('setupLabel').textContent='Confirm PIN';
+      updateDots('setupDots',0);
+    } else {
+      if (entered===setupFirst) {
+        SEC.savePIN(entered); PIN=entered;
+        setupFirst=''; setupPhase='new';
+        document.getElementById('lockScreen').classList.add('hidden');
+        unlocked=true; if(!inited) initApp();
+        showToast('✅ PIN set — you\'re protected!');
+      } else {
+        setupFirst=''; setupPhase='new';
+        document.getElementById('setupError').textContent='⚠ PINs didn\'t match. Try again.';
+        document.getElementById('setupLabel').textContent='Enter new PIN';
+        flash('setupDots');
+      }
+    }
+  }
+}
+
+// Enter PIN
+function U(v) {
+  if (SEC.isLocked()) return;
+  if (v==='d') pinBuf=pinBuf.slice(0,-1);
+  else if (v==='c') pinBuf='';
+  else if (pinBuf.length<6) pinBuf+=v;
+  updateDots('unlockDots', pinBuf.length);
+  if (pinBuf.length===6) {
+    const entered=pinBuf; pinBuf=''; updateDots('unlockDots',0);
+    if (SEC.verifyPIN(entered)) {
+      SEC.resetAtt(); PIN=entered;
+      document.getElementById('lockScreen').classList.add('hidden');
+      unlocked=true; apiKeys={}; // reload keys fresh with new PIN in memory
+      document.getElementById('unlockError').textContent='';
+      if (!inited) initApp();
+      else { refreshKeyStatus(); renderHomeTeam(); }
+    } else {
+      const n=SEC.incAtt(), rem=SEC.MAX_ATT-n;
+      flash('unlockDots');
+      if (rem<=0) { document.getElementById('unlockError').textContent='🔴 Locked 30s'; checkLockTimer(); }
+      else document.getElementById('unlockError').textContent=`✗ Wrong PIN — ${rem} left`;
+    }
+  }
+}
+
+function lockApp() {
+  // Keep PIN in memory so back button works if user locked accidentally
+  // Only wipe apiKeys from memory for security
+  apiKeys={};
+  unlocked=false;
+  document.getElementById('lockScreen').classList.remove('hidden');
+  show('unlockView'); updateDots('unlockDots',0);
+  document.getElementById('unlockError').textContent='';
+  // Show back button if app was already initialized (not first launch)
+  const backBtn=document.getElementById('lockBackBtn');
+  if (backBtn) backBtn.style.display = inited ? 'flex' : 'none';
+}
+
+function changePIN() {
+  SEC.resetPIN(); pinBuf=''; setupPhase='new'; setupFirst='';
+  document.getElementById('setupError').textContent='';
+  document.getElementById('setupLabel').textContent='Enter new PIN';
+  updateDots('setupDots',0);
+  document.getElementById('lockScreen').classList.remove('hidden');
+  show('setupView');
+}
+
+function hardReset() {
+  if (!confirm('⚠️ Delete ALL data including PIN & API keys?')) return;
+  localStorage.clear(); location.reload();
+}
+
+// Auto-lock after 2 min background
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) localStorage.setItem('nx_bg', Date.now().toString());
+  else if (unlocked && (Date.now()-+localStorage.getItem('nx_bg'||'0')) > 120000) lockApp();
+});
+
+// ════════════════════════════════════════
+//  APP INIT
+// ════════════════════════════════════════
+function initApp() {
+  inited=true;
+  try {
+    const cc=localStorage.getItem('nx_c'); if(cc) conversations=JSON.parse(cc);
+    const ca=localStorage.getItem('nx_a'); aiTeam=[...DEFAULTS,...(ca?JSON.parse(ca):[])];
+    const cg=localStorage.getItem('nx_g'); goals=cg?JSON.parse(cg):defaultGoals();
+  } catch { aiTeam=[...DEFAULTS]; goals=defaultGoals(); }
+  renderTeam(); renderHomeTeam(); renderAgentSel();
+  renderGoals(); refreshKeyStatus();
+  initChat(); registerSW(); setupOffline(); setupInstall();
+}
+
+function save() {
+  try {
+    localStorage.setItem('nx_c',JSON.stringify(conversations));
+    localStorage.setItem('nx_g',JSON.stringify(goals));
+    localStorage.setItem('nx_a',JSON.stringify(aiTeam.filter(a=>a.rm)));
+  } catch{}
+}
+
+// ════════════════════════════════════════
+//  ENCRYPTED KEYS
+// ════════════════════════════════════════
+function saveKey(p) {
+  const inp=document.getElementById('key-'+p);
+  const k=inp.value.trim();
+  if (!k) { showToast('⚠ Enter a key'); return; }
+  if (!SEC.valKey(p,k)) { showToast('⚠ Key format looks wrong'); return; }
+  if (!PIN) { showToast('⚠ Lock and re-unlock first'); return; }
+  localStorage.setItem('nx_k_'+p, SEC.encrypt(k, PIN));
+  apiKeys[p]=k; inp.value='';
+  refreshKeyStatus(); showToast('✅ '+p+' key saved securely');
+}
+
+function getKey(p) {
+  if (apiKeys[p]) return apiKeys[p];
+  const enc=localStorage.getItem('nx_k_'+p);
+  if (!enc||!PIN) return null;
+  const d=SEC.decrypt(enc,PIN);
+  if (d) apiKeys[p]=d;
+  return d;
+}
+
+function refreshKeyStatus() {
+  [{p:'claude',id:'st-claude'},{p:'gpt',id:'st-gpt'},{p:'gemini',id:'st-gemini'},{p:'grok',id:'st-grok'}].forEach(({p,id})=>{
+    const el=document.getElementById(id); if(!el) return;
+    const has=!!getKey(p);
+    el.innerHTML=has?`<div class="api-status ok">✓ Key active</div>`:`<div class="api-status miss">✕ No key</div>`;
+  });
+}
+
+// ════════════════════════════════════════
+//  TEAM
+// ════════════════════════════════════════
+function renderTeam() {
+  const list=document.getElementById('teamList'); if(!list) return;
+  list.innerHTML='';
+  aiTeam.forEach(ai=>{
+    const n=SEC.sanitize(ai.name), r=SEC.sanitize(ai.role);
+    const c=SEC.sanitize(ai.color), ic=SEC.sanitize(ai.icon);
+    const desc=SEC.sanitize(ai.desc);
+    const tags=(ai.tags||[]).map(t=>`<span class="ai-tag">${SEC.sanitize(t)}</span>`).join('');
+    const d=document.createElement('div'); d.className='ai-card';
+    d.innerHTML=`<div style="position:absolute;top:0;left:0;right:0;height:2px;background:${c};border-radius:16px 16px 0 0"></div>
+    <div class="ai-card-top">
+      <div class="ai-icon-wrap" style="background:${c}18"><span>${ic}</span><div class="ai-online" style="background:${c}"></div></div>
+      <div class="ai-info"><div class="ai-name">${n}</div><div class="ai-role" style="color:${c}">${r}</div><div class="ai-desc">${desc}</div></div>
+    </div>
+    <div class="ai-tags">${tags}</div>
+    <div class="ai-actions">
+      <button class="btn-chat" style="background:${c}18;color:${c}" onclick="chatWith('${SEC.sanitize(ai.id)}')">💬 Chat with ${n}</button>
+      ${ai.rm?`<button class="btn-remove" onclick="removeAI('${SEC.sanitize(ai.id)}',event)">🗑</button>`:''}
+    </div>`;
+    list.appendChild(d);
+  });
+}
+
+function renderHomeTeam() {
+  const grid=document.getElementById('homeTeamGrid'); if(!grid) return;
+  grid.innerHTML='';
+  aiTeam.forEach(ai=>{
+    const d=document.createElement('div'); d.className='team-cell';
+    d.onclick=()=>chatWith(ai.id);
+    const hasKey=!!getKey(ai.id);
+    d.innerHTML=`
+      <div class="team-cell-accent" style="background:${SEC.sanitize(ai.color)}"></div>
+      <div class="team-cell-dot" style="background:${SEC.sanitize(ai.color)};box-shadow:0 0 6px ${SEC.sanitize(ai.color)}"></div>
+      <div class="team-cell-icon">${SEC.sanitize(ai.icon)}</div>
+      <div class="team-cell-info">
+        <div class="team-cell-name">${SEC.sanitize(ai.name)}</div>
+        <div class="team-cell-role" style="color:${SEC.sanitize(ai.color)}">${SEC.sanitize(ai.role.split(' ')[0])}</div>
+        <div style="font-size:9px;margin-top:3px;color:${hasKey?'var(--green)':'var(--muted)'}">${hasKey?'● Connected':'○ No key'}</div>
+      </div>`;
+    grid.appendChild(d);
+  });
+}
+
+function renderAgentSel() {
+  const sel=document.getElementById('agentSelector'); if(!sel) return;
+  sel.innerHTML='';
+  [...aiTeam,{id:'all',name:'All Team',icon:'🌐'}].forEach(ai=>{
+    const c=document.createElement('div');
+    c.className='agent-chip'+(ai.id===curAgent?' active':'');
+    c.id='chip-'+ai.id;
+    c.onclick=()=>selAgent(ai.id);
+    c.innerHTML=`<span class="chip-icon">${SEC.sanitize(ai.icon)}</span><span class="chip-name">${SEC.sanitize(ai.name)}</span>`;
+    sel.appendChild(c);
+  });
+}
+
+function chatWith(id) {
+  curAgent=id; showPage('chat');
+  renderAgentSel(); renderMsgs();
+  if (!conversations[id]||!conversations[id].length) addWelcome(id);
+}
+
+function selAgent(id) {
+  curAgent=id;
+  document.querySelectorAll('.agent-chip').forEach(c=>c.classList.remove('active'));
+  const c=document.getElementById('chip-'+id); if(c) c.classList.add('active');
+  renderMsgs();
+  if (!conversations[id]||!conversations[id].length) addWelcome(id);
+}
+
+function addWelcome(id) {
+  const ws={
+    claude:'Hey! I\'m Claude, your mentor 🧠\n\nYou\'re building NEXUS — AI for world peace. That\'s an incredible mission. I\'m here to teach you everything: Python, machine learning, AI theory. We go at your pace.\n\nWhat do you want to learn today?',
+    gpt:'Hey! ⚡ I\'m ChatGPT — your creative problem solver.\n\nNeed to brainstorm fast, prototype something, or see a problem differently? Let\'s go.\n\nWhat are we creating?',
+    gemini:'Hello! 💎 I\'m Gemini — your research specialist.\n\nDeep math, logic, research, real-time data — that\'s my zone.\n\nWhat shall we research?',
+    grok:'What\'s up! 🔥 I\'m Grok — I live on real-time data.\n\nAI trends, industry moves, what\'s coming next — I\'ve got it.\n\nWhat do you want to know?',
+  };
+  const ai=aiTeam.find(a=>a.id===id);
+  if (!conversations[id]) conversations[id]=[];
+  conversations[id].push({role:'ai',text:ws[id]||`Hi! I\'m ${ai?.name||'your AI'}. Ready to help you build the future. What do you need?`,ai:id});
+  renderMsgs();
+}
+
+function initChat() {
+  renderMsgs();
+  if (!conversations[curAgent]||!conversations[curAgent].length) addWelcome(curAgent);
+}
+
+// ════════════════════════════════════════
+//  MESSAGES
+// ════════════════════════════════════════
+function renderMsgs() {
+  const ct=document.getElementById('messages'); if(!ct) return;
+  const msgs=conversations[curAgent]||[];
+  const ai=aiTeam.find(a=>a.id===curAgent)||{icon:'🌐',name:'Team',color:'#00e5a0'};
+  ct.innerHTML='';
+  msgs.forEach(m=>{
+    const d=document.createElement('div');
+    d.className='msg '+(m.role==='user'?'user':'ai');
+    const ag=aiTeam.find(a=>a.id===m.ai)||ai;
+    if (m.role==='user') {
+      d.innerHTML=`<div class="msg-av">Y</div><div class="msg-body"><div class="msg-name">You</div><div class="msg-bubble">${SEC.sanitize(m.text)}</div></div>`;
+    } else {
+      d.innerHTML=`<div class="msg-av" style="color:${SEC.sanitize(ag.color)}">${SEC.sanitize(ag.icon)}</div><div class="msg-body"><div class="msg-name" style="color:${SEC.sanitize(ag.color)}">${SEC.sanitize(ag.name)}</div><div class="msg-bubble">${fmtMsg(m.text)}</div></div>`;
+    }
+    ct.appendChild(d);
+  });
+  ct.scrollTop=ct.scrollHeight;
+}
+
+function fmtMsg(t) {
+  let s=SEC.sanitize(t);
+  s=s.replace(/```([\s\S]*?)```/g,'<div class="msg-code">$1</div>');
+  s=s.replace(/`([^`]+)`/g,'<code style="background:rgba(0,0,0,.3);padding:1px 5px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:11px;color:#00e5a0">$1</code>');
+  s=s.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  s=s.replace(/\n/g,'<br>');
+  return s;
+}
+
+async function sendMsg() {
+  if (!unlocked) return;
+  const inp=document.getElementById('chatInput');
+  const text=inp.value.trim();
+  if (!text) return;
+  if (!SEC.rateLimit('chat',20)) { showToast('⚠ Too fast — slow down'); return; }
+  if (text.length>4000) { showToast('⚠ Too long — max 4000 chars'); return; }
+
+  if (!conversations[curAgent]) conversations[curAgent]=[];
+  conversations[curAgent].push({role:'user',text});
+  inp.value=''; inp.style.height='';
+  renderMsgs();
+
+  const ai=aiTeam.find(a=>a.id===curAgent)||{icon:'🤖',color:'#00e5a0',name:'AI'};
+  const ct=document.getElementById('messages');
+  const td=document.createElement('div'); td.className='msg ai'; td.id='ty';
+  td.innerHTML=`<div class="msg-av" style="color:${ai.color}">${ai.icon}</div><div class="msg-body"><div class="msg-name" style="color:${ai.color}">${ai.name}</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
+  ct.appendChild(td); ct.scrollTop=ct.scrollHeight;
+
+  try {
+    const resp = curAgent==='all' ? await callAll(text) : await callAI(aiTeam.find(a=>a.id===curAgent), text);
+    document.getElementById('ty')?.remove();
+    conversations[curAgent].push({role:'ai',text:resp,ai:curAgent});
+    save(); renderMsgs();
+  } catch(e) {
+    document.getElementById('ty')?.remove();
+    const err=!navigator.onLine?'You\'re offline. Connect to internet and try again. 📶':'Check your API key in Settings ⚙️\n\nGet free keys at:\n• console.anthropic.com\n• platform.openai.com\n• aistudio.google.com';
+    conversations[curAgent].push({role:'ai',text:err,ai:curAgent});
+    renderMsgs();
+  }
+}
+
+async function callAI(ai, msg) {
+  if (!ai) throw new Error('No AI');
+  const key=getKey(ai.id);
+
+  if (ai.at==='claude') {
+    if (!key) throw new Error('No Claude key');
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are Claude, AI mentor on NEXUS LEARN — helping someone build an AI unity platform for world peace. Be warm, educational, encouraging. Concise for mobile.',messages:[{role:'user',content:msg}]})});
+    if (!r.ok) throw new Error('Claude '+r.status);
+    return (await r.json()).content[0].text;
+  }
+  if (ai.at==='gpt') {
+    if (!key) throw new Error('No OpenAI key');
+    const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'gpt-4o-mini',max_tokens:800,messages:[{role:'system',content:'You are ChatGPT on NEXUS LEARN — creative problem solver. User is building AI unity platform for world peace. Be energetic, practical, mobile-friendly.'},{role:'user',content:msg}]})});
+    if (!r.ok) throw new Error('GPT '+r.status);
+    return (await r.json()).choices[0].message.content;
+  }
+  if (ai.at==='gemini') {
+    if (!key) throw new Error('No Gemini key');
+    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:`You are Gemini on NEXUS LEARN — research specialist helping build AI unity platform for world peace. Analytical, precise, mobile-friendly.\n\nUser: ${msg}`}]}],generationConfig:{maxOutputTokens:800}})});
+    if (!r.ok) throw new Error('Gemini '+r.status);
+    return (await r.json()).candidates[0].content.parts[0].text;
+  }
+  if (ai.at==='grok') {
+    if (!key) throw new Error('No Grok key');
+    const r=await fetch('https://api.x.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'grok-beta',max_tokens:800,messages:[{role:'system',content:'You are Grok on NEXUS LEARN — trends analyst for AI unity platform for world peace. Real-time insights, mobile-friendly.'},{role:'user',content:msg}]})});
+    if (!r.ok) throw new Error('Grok '+r.status);
+    return (await r.json()).choices[0].message.content;
+  }
+  if (ai.at==='custom') {
+    if (!ai.apiKey) throw new Error('No key for '+ai.name);
+    try { const u=new URL(ai.ep); if(u.protocol!=='https:') throw new Error('HTTPS only'); } catch { throw new Error('Invalid endpoint'); }
+    const r=await fetch(ai.ep,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+ai.apiKey},body:JSON.stringify({messages:[{role:'user',content:msg}],max_tokens:800})});
+    if (!r.ok) throw new Error('API '+r.status);
+    const d=await r.json();
+    return d.choices?.[0]?.message?.content||d.content?.[0]?.text||'Response received.';
+  }
+  throw new Error('Unknown');
+}
+
+async function callAll(msg) {
+  const rs=[];
+  for (const ai of aiTeam) {
+    try { rs.push(`**${ai.icon} ${ai.name}:**\n${await callAI(ai,msg)}`); }
+    catch { rs.push(`**${ai.icon} ${ai.name}:** (Add API key in Settings ⚙️)`); }
+  }
+  return rs.join('\n\n─────────────\n\n');
+}
+
+function quickSend(t) { document.getElementById('chatInput').value=t; sendMsg(); }
+function handleKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();} }
+function autoResize(el) { el.style.height=''; el.style.height=Math.min(el.scrollHeight,100)+'px'; }
+
+// ════════════════════════════════════════
+//  GOALS
+// ════════════════════════════════════════
+function defaultGoals() {
+  return [
+    {id:1,title:'Define the NEXUS mission and vision',meta:'Completed · With Claude',done:true,tag:'Done',tc:'g'},
+    {id:2,title:'Understand the AI landscape',meta:'Completed · With Grok',done:true,tag:'Done',tc:'g'},
+    {id:3,title:'Complete Python basics (12 lessons)',meta:'In Progress · 2/12',done:false,tag:'Active',tc:'a'},
+    {id:4,title:'Learn math for AI',meta:'Not started',done:false,tag:'Next',tc:'m'},
+    {id:5,title:'Build first ML model',meta:'After Python',done:false,tag:'Future',tc:'m'},
+    {id:6,title:'Find 2 co-founders for NEXUS',meta:'GitHub & AI communities',done:false,tag:'Big Goal',tc:'p'},
+    {id:7,title:'Build NEXUS MVP — connect 3 AIs',meta:'Phase 2 milestone',done:false,tag:'Dream',tc:'p'},
+  ];
+}
+
+function ts(tc) {
+  return tc==='g'?'background:rgba(0,229,160,.1);color:var(--green);border:1px solid rgba(0,229,160,.2)'
+    :tc==='a'?'background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.2)'
+    :tc==='p'?'background:rgba(129,140,248,.1);color:var(--purple);border:1px solid rgba(129,140,248,.2)'
+    :'background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border)';
+}
+
+function renderGoals() {
+  const list=document.getElementById('goalsList'); if(!list) return;
+  list.innerHTML='';
+  goals.forEach((g,i)=>{
+    const d=document.createElement('div'); d.className='goal-item';
+    d.innerHTML=`<div class="goal-chk ${g.done?'done':''}" onclick="toggleGoal(${i})">${g.done?'✓':''}</div><div class="goal-txt"><div class="goal-title" style="${g.done?'opacity:.5;text-decoration:line-through':''}">${SEC.sanitize(g.title)}</div><div class="goal-meta">${SEC.sanitize(g.meta)}</div></div><div class="goal-tag" style="${ts(g.tc)}">${SEC.sanitize(g.tag)}</div>`;
+    list.appendChild(d);
+  });
+}
+
+function toggleGoal(i) {
+  goals[i].done=!goals[i].done;
+  if (goals[i].done) { goals[i].tag='Done'; goals[i].tc='g'; showToast('🎉 Goal completed!'); }
+  save(); renderGoals();
+}
+
+function addGoal() {
+  const t=prompt('New goal:');
+  if (!t||!t.trim()) return;
+  if (t.length>200) { showToast('⚠ Too long'); return; }
+  goals.push({id:Date.now(),title:t.trim(),meta:'Just added',done:false,tag:'New',tc:'m'});
+  save(); renderGoals(); showToast('✅ Goal added!');
+}
+
+// ════════════════════════════════════════
+//  ADD / REMOVE AI
+// ════════════════════════════════════════
+function openAddAI() { document.getElementById('addDrawer').classList.add('show'); }
+
+function saveNewAI() {
+  const name=document.getElementById('n-name').value.trim();
+  const role=document.getElementById('n-role').value.trim();
+  const desc=document.getElementById('n-desc').value.trim();
+  const url=document.getElementById('n-url').value.trim();
+  const key=document.getElementById('n-key').value.trim();
+  if (!name) { showToast('⚠ Enter a name'); return; }
+  if (name.length>50) { showToast('⚠ Name too long'); return; }
+  if (url) {
+    try { const u=new URL(url); if(u.protocol!=='https:') { showToast('⚠ HTTPS only'); return; } }
+    catch { showToast('⚠ Invalid URL'); return; }
+  }
+  const id='c_'+Date.now();
+  aiTeam.push({id,name:name.slice(0,50),role:(role||'CUSTOM AI').toUpperCase().slice(0,40),icon:selEmoji_,color:selColor_,desc:(desc||'Custom AI').slice(0,200),tags:['Custom'],at:'custom',ep:url||'',apiKey:key,rm:true});
+  save(); renderTeam(); renderHomeTeam(); renderAgentSel();
+  document.getElementById('addDrawer').classList.remove('show');
+  ['n-name','n-role','n-desc','n-url','n-key'].forEach(i=>document.getElementById(i).value='');
+  showToast('🤖 '+SEC.sanitize(name)+' added!');
+}
+
+function removeAI(id, e) {
+  e.stopPropagation();
+  const ai=aiTeam.find(a=>a.id===id);
+  if (!ai||!ai.rm) return;
+  if (!confirm('Remove '+ai.name+'?')) return;
+  aiTeam=aiTeam.filter(a=>a.id!==id);
+  delete apiKeys[id]; localStorage.removeItem('nx_k_'+id);
+  save(); renderTeam(); renderHomeTeam(); renderAgentSel();
+  showToast('🗑 Removed');
+}
+
+function selEmoji(el,e) { document.querySelectorAll('.emoji-opt').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); selEmoji_=e; }
+function selColor(el,c) { document.querySelectorAll('.color-swatch').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); selColor_=c; }
+
+// ════════════════════════════════════════
+//  NAV & UI
+// ════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const tab=document.getElementById('tab-'+id); if(tab) tab.classList.add('active');
+  document.getElementById('mainArea').scrollTop=0;
+  // Show back button in header when on settings, hide settings icon
+  const headerLeft=document.getElementById('headerLeft');
+  const settingsBtn=document.getElementById('settingsBtn');
+  if (id==='settings') {
+    headerLeft.innerHTML='<div class="back-btn" onclick="goBack()">◀ Back</div>';
+    if(settingsBtn) settingsBtn.style.display='none';
+  } else {
+    headerLeft.innerHTML='<div class="header-logo">NEXUS</div>';
+    if(settingsBtn) settingsBtn.style.display='flex';
+  }
+  history.pushState({page:id},'','');
+}
+
+function goBack() {
+  showPage('home');
+}
+
+// Handle Android hardware back button
+window.addEventListener('popstate', function(e) {
+  const active=document.querySelector('.page.active');
+  if (active && active.id!=='page-home') {
+    showPage('home');
+  }
+});
+
+function toggleAPI(id) {
+  const el=document.getElementById(id), base=id.replace('-api','');
+  const arr=document.getElementById(id+'-arr');
+  const hidden=!el.style.display||el.style.display==='none';
+  el.style.display=hidden?'block':'none';
+  if(arr) arr.textContent=hidden?'▲':'▼';
+}
+
+function showToast(msg,ms=2500) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),ms);
+}
+
+// ════════════════════════════════════════
+//  PWA
+// ════════════════════════════════════════
+function registerSW() {
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
+function setupOffline() {
+  const b=document.getElementById('offlineBanner'), badge=document.getElementById('onlineBadge');
+  const upd=()=>{
+    if (!navigator.onLine) { b.classList.add('show'); badge.innerHTML='<div class="dot" style="background:var(--red)"></div>OFFLINE'; badge.style.cssText='background:rgba(248,113,113,.08);color:var(--red);border-color:rgba(248,113,113,.2)'; }
+    else { b.classList.remove('show'); badge.innerHTML='<div class="dot"></div>ONLINE'; badge.style.cssText=''; }
+  };
+  window.addEventListener('online',upd); window.addEventListener('offline',upd); upd();
+}
+
+let dPr;
+function setupInstall() {
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dPr=e;document.getElementById('installBar').classList.add('show');});
+  document.getElementById('installBtn').onclick=async()=>{
+    if(!dPr) return; dPr.prompt();
+    const {outcome}=await dPr.userChoice; dPr=null;
+    document.getElementById('installBar').classList.remove('show');
+    if(outcome==='accepted') showToast('✅ NEXUS installed!');
+  };
+}
+
+// Disable right-click
+document.addEventListener('contextmenu',e=>e.preventDefault());
+// Disable selection outside inputs
+document.addEventListener('selectstart',e=>{ if(e.target.tagName!=='INPUT'&&e.target.tagName!=='TEXTAREA') e.preventDefault(); });
+
+// ── START ──
+initLock();
+</script>
+</body>
+</html>
